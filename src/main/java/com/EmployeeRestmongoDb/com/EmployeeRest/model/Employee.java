@@ -7,24 +7,24 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Employee {
 
 	@Id
-	String id;
-	
 	String firstname;
 	String lastname;
 	int age;
 	
 	
-	public String toString() {
-		return "Employee First Name:"+firstname+" Last Name:"+lastname+" age:"+age;
-	}
-
-	public Employee(String firstname, String lastname, int age) {
+	public Employee(String firstname,
+			String lastname, int age) {
 		
 		this.firstname = firstname;
 		this.lastname = lastname;
-		this.age = age;
-	}
+		}
+
 	
+
+	
+	public String toString() {
+		return "Employee First Name:"+firstname+" Last Name:"+lastname+" age:"+age;
+	}
 	public String getFirstname() {
 		return firstname;
 	}

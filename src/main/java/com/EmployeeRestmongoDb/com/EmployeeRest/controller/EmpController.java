@@ -3,6 +3,7 @@ package com.EmployeeRestmongoDb.com.EmployeeRest.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,12 +20,17 @@ public class EmpController {
 	
 	
 	@RequestMapping("/employee")
-	public String create(@RequestParam String firstname,@RequestParam String lastname,@RequestParam int age)
+	public Employee create(@RequestParam String firstname,@RequestParam String lastname,@RequestParam int age)
+	{
+		Employee emp = employeeservice.create(firstname, lastname, age);
+		return emp;
+	}
+	@PostMapping("/employee")
+	public String createPost(@RequestParam String firstname,@RequestParam String lastname,@RequestParam int age)
 	{
 		Employee emp = employeeservice.create(firstname, lastname, age);
 		return emp.toString();
 	}
-
 	@RequestMapping("/get")
 	public Employee getPerson(@RequestParam String firstname) {
 		return employeeservice.getByFirstName(firstname);
