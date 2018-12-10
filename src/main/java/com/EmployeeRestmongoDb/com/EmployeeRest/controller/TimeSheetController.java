@@ -8,42 +8,39 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.EmployeeRestmongoDb.com.EmployeeRest.model.DaySheet;
-import com.EmployeeRestmongoDb.com.EmployeeRest.model.Employee;
-import com.EmployeeRestmongoDb.com.EmployeeRest.model.SubmitTimeSheet;
+import com.EmployeeRestmongoDb.com.EmployeeRest.model.TimeSheet;
 import com.EmployeeRestmongoDb.com.EmployeeRest.model.TimeSheetDetails;
-import com.EmployeeRestmongoDb.com.EmployeeRest.model.TimeSheetRest;
+import com.EmployeeRestmongoDb.com.EmployeeRest.service.TimeSheetDetailService;
 import com.EmployeeRestmongoDb.com.EmployeeRest.service.TimeSheetService;
 
 @RestController
+@RequestMapping("/timesheet")
 public class TimeSheetController {
 
 	@Autowired
 	private TimeSheetService timesheetService;
+	@Autowired
+	private TimeSheetDetailService timeSheetDetailService;
 		
-//	@RequestMapping("/createTimesheet")
-//	public String create(@RequestParam String ddljob,@RequestParam String selectWeek,@RequestParam String jobId,@RequestParam String approver) {
-//		TimeSheetDetails t = timesheetService.create(ddljob, selectWeek, jobId, approver);
-//		return t.toString();
-//	}
 	
-	 @GetMapping(path= {"/viewTimeSheetCalander"},consumes= {
+	 @GetMapping(path= {"/veiw"},consumes= {
 				MediaType.APPLICATION_JSON_VALUE
 		},
 		produces= {
 				MediaType.APPLICATION_JSON_VALUE
 				
 		})
-	 public String status()
+	 public String viewAll()
 	 {
-	  return "working";
+		 
+	return timesheetService.getByEmpId();
+	  
 	 }
 	
 	@PostMapping(
-			path= {"/timesheet"},
+			path= {"/create"},
 			consumes= {
 					MediaType.APPLICATION_JSON_VALUE
 			},
@@ -51,28 +48,19 @@ public class TimeSheetController {
 					MediaType.APPLICATION_JSON_VALUE
 					
 			})
-	public ResponseEntity<TimeSheetDetails> createTimeSheetDetails(@RequestBody TimeSheetRest timesheetDetails) {
+	public ResponseEntity<TimeSheetDetails> createTimeSheetDetails(@RequestBody TimeSheetDetails timesheetDetails) {
 		
 		
-		TimeSheetDetails returnValue = new TimeSheetDetails();
-		returnValue.setSelectWeek(timesheetDetails.getSelectWeek());
-		returnValue.setApprover(timesheetDetails.getApprover());
-		returnValue.setClient(timesheetDetails.getClient());
-		returnValue.setJobTitle(timesheetDetails.getJobTitle());
-		returnValue.setEndDate(timesheetDetails.getEndDate());
-		returnValue.setProjectId(timesheetDetails.getProjectId());
-		return new ResponseEntity<TimeSheetDetails>(returnValue,HttpStatus.OK);
+		
+	//	TimeSheetDetails timeSheetDetails = timeSheetDetailService.createTimeSheetDetail(timesheetDetails);	
+		
+		
+		return new ResponseEntity<TimeSheetDetails>(timesheetDetails,HttpStatus.OK);
 		
 	}
 	
-//	@RequestMapping("/employee")
-//	public Employee create(@RequestParam String firstname,@RequestParam String lastname,@RequestParam int age)
-//	{
-//		Employee emp = employeeservice.create(firstname, lastname, age);
-//		return emp;
-//	}
 	@PostMapping(
-			path= {"/submitTimeSheet"},
+			path= {"/submit"},
 			consumes= {
 					MediaType.APPLICATION_JSON_VALUE
 			},
@@ -80,37 +68,38 @@ public class TimeSheetController {
 					MediaType.APPLICATION_JSON_VALUE
 					
 			})
-	public ResponseEntity<SubmitTimeSheet> createTimeSheet(@RequestBody SubmitTimeSheet submitDetails)
+	public ResponseEntity<TimeSheet> createTimeSheet(@RequestBody TimeSheet submitDetails)
 	{
+		TimeSheetDetails timesheet = new TimeSheetDetails();
 	
-		System.err.println(submitDetails.getWorkinghours().getDaySheet().size());
-
-			SubmitTimeSheet submitTimeSheet = timesheetService.createTimeSheet(submitDetails.getWorkinghours(), submitDetails.getWorkingdetails());
+			TimeSheet submitTimeSheet = timesheetService.createTimeSheet(submitDetails);
 		
 		
-		return new ResponseEntity<SubmitTimeSheet>(submitDetails,HttpStatus.OK);
+		return new ResponseEntity<TimeSheet>(submitDetails,HttpStatus.OK);
 
 		
 	}
 
-//	@PostMapping(
-//			path= {"/submitTimeSheet"},
-//			consumes= {
-//					MediaType.APPLICATION_JSON_VALUE
-//			},
-//			produces= {
-//					MediaType.APPLICATION_JSON_VALUE
-//					
-//			})
-//	public ResponseEntity<SubmitTimeSheetRequest> createTimeSheetWeekDetails(@RequestBody SubmitTimeSheetRequest submitDetails) {
-//		System.out.println("Dads" + submitDetails.getWorkingHours());
-//		
-//	
-//	
-//	return null;	
-//	//	return new ResponseEntity<SubmitTimeSheetRequest>(returnValue,HttpStatus.OK);
-//		
-//		
-//	}
+	@PostMapping(
+			path= {"/save"},
+			consumes= {
+					MediaType.APPLICATION_JSON_VALUE
+			},
+			produces= {
+					MediaType.APPLICATION_JSON_VALUE
+					
+			})
+	public ResponseEntity<TimeSheet> saveTimeSheet(@RequestBody TimeSheet submitDetails)
+	{
+				TimeSheet submitTimeSheet = timesheetService.createTimeSheet(submitDetails);
+		
+		
+		return new ResponseEntity<TimeSheet>(submitDetails,HttpStatus.OK);
+
+		
+	}
+
+	
+
 }
 	

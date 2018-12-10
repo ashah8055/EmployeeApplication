@@ -1,66 +1,126 @@
+
 package com.EmployeeRestmongoDb.com.EmployeeRest.model;
 
 import java.util.UUID;
 
-import org.springframework.data.annotation.Transient;
-import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.annotation.Id;
 
-@Document
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonPropertyOrder({
+    "selectWeek",
+    "jobTitle",
+    "endClient",
+    "client",
+    "approver",
+    "endDate",
+    "projectId",
+    "employeeId"
+})
 public class TimeSheetDetails {
 
-	@Transient
-	private UUID reqId = UUID.randomUUID();
-	
-	String selectWeek;
-	String approver;
-	String client;
-	String jobTitle;
-	String endDate;
-	String projectId;
-	
-	
-	
+	public String getEmployeeId() {
+		return employeeId;
+	}
 
+	public void setEmployeeId(String employeeId) {
+		this.employeeId = employeeId;
+	}
+
+	public UUID getId() {
+		return id;
+	}
+
+	@Id
+    UUID id = UUID.randomUUID();
 	
-	public String getClient() {
-		return client;
-	}
-	public void setClient(String client) {
-		this.client = client;
-	}
-	public String getJobTitle() {
-		return jobTitle;
-	}
-	public void setJobTitle(String jobTitle) {
-		this.jobTitle = jobTitle;
-	}
-	public String getEndDate() {
-		return endDate;
-	}
-	public void setEndDate(String endDate) {
-		this.endDate = endDate;
-	}
-	public String getProjectId() {
-		return projectId;
-	}
-	public void setProjectId(String projectId) {
-		this.projectId = projectId;
-	}
-	public String getSelectWeek() {
-		return selectWeek;
-	}
-	public void setSelectWeek(String selectWeek) {
-		this.selectWeek = selectWeek;
-	}
-	public String getApprover() {
-		return approver;
-	}
-	public void setApprover(String approver) {
-		this.approver = approver;
-	}
-	public UUID getReqId() {
-		return reqId;
-	}
-	
-		
+    @JsonProperty("selectWeek")
+    private String selectWeek;
+    @JsonProperty("jobTitle")
+    private String jobTitle;
+    @JsonProperty("endClient")
+    private String endClient;
+    @JsonProperty("client")
+    private String client;
+    @JsonProperty("approver")
+    private String approver;
+    @JsonProperty("endDate")
+    private String endDate;
+    @JsonProperty("projectId")
+    private String projectId;
+    @JsonProperty("employeeId")
+    private String employeeId	;
+    @JsonProperty("selectWeek")
+    public String getSelectWeek() {
+        return selectWeek;
+    }
+
+    @JsonProperty("selectWeek")
+    public void setSelectWeek(String selectWeek) {
+        this.selectWeek = selectWeek;
+    }
+
+    @JsonProperty("jobTitle")
+    public String getJobTitle() {
+        return jobTitle;
+    }
+
+    @JsonProperty("jobTitle")
+    public void setJobTitle(String jobTitle) {
+        this.jobTitle = jobTitle;
+    }
+
+    @JsonProperty("endClient")
+    public String getEndClient() {
+        return endClient;
+    }
+
+    @JsonProperty("endClient")
+    public void setEndClient(String endClient) {
+        this.endClient = endClient;
+    }
+
+    @JsonProperty("client")
+    public String getClient() {
+        return client;
+    }
+
+    @JsonProperty("client")
+    public void setClient(String client) {
+        this.client = client;
+    }
+
+    @JsonProperty("approver")
+    public String getApprover() {
+        return approver;
+    }
+
+    @JsonProperty("approver")
+    public void setApprover(String approver) {
+        this.approver = approver;
+    }
+
+    @JsonProperty("endDate")
+    public String getEndDate() {
+        return endDate;
+    }
+
+    @JsonProperty("endDate")
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
+
+    @JsonProperty("projectId")
+    public String getProjectId() {
+        return projectId;
+    }
+
+    @JsonProperty("projectId")
+    public void setProjectId(String projectId) {
+        this.projectId = projectId;
+    }
+
 }
